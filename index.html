@@ -9,32 +9,53 @@
   <body>
     <div class="container is-widescreen">
       <div class="content">
-        <div class="columns is-centered is-fullwidth">
-          <div class="column is-4 m-4 has-text-centered">
-            <button id="b.btn.sel" class="button mb-4 is-fullwidth is-success" onclick="gmSelect('b');" style="transform: rotate(180deg);">
-              Select
-            </button>
-            <button id="b.btn.gen" class="button mb-4 is-fullwidth is-success" onclick="gmGenerate('b');" style="transform: rotate(180deg);">
-              Generate
-            </button>
+        <div class="columns is-vcentered">
+          <div class="column m-4 has-text-centered">
+            <div class="columns is-centered is-vcentered">
+              <div class ="column">
+                <button id="b.btn.sel" class="button mb-1 is-fullwidth is-success" onclick="gmSelect('b');" style="transform: rotate(180deg);">
+                  Select
+                </button>
+                <button id="b.btn.gen" class="button mb-1 is-fullwidth is-success" onclick="gmGenerate('b');" style="transform: rotate(180deg);">
+                  Generate
+                </button>
+              </div>
+            </div>
             <h1 id="b.title" style="transform: rotate(180deg);">-.-</h1>
             <h1 style="transform: rotate(180deg);">Gamer B:</h1>
             <h3 id="b.stats" style="transform: rotate(180deg);">---</h3>
-            <progress id="game.pb" class="progress" value="0" max="100"></progress>
+            <div class="columns is-gapless is-centered is-vcentered">
+              <div class="column">
+                <div style="transform: rotate(180deg);">
+                  <a class="is-link is-small" href="help.html">
+                  Help
+                  </a>
+                </div>
+              </div>
+              <div class="column">
+                <progress id="game.pb" class="progress" value="0" max="100"></progress>
+              </div>
+              <div class="column">
+                <a class="is-link is-small" href="help.html">
+                  Help
+                </a>
+              </div>
+            </div>
             <h3 id="a.stats">---</h3>
             <h1>Gamer A:</h1>
             <h1 id="a.title">-.-</h1>
-            <button id="a.btn.gen" class="button mt-4 is-fullwidth is-success" onclick="gmGenerate('a');">
-              Generate
-            </button>
-            <button id="a.btn.sel" class="button mt-4 is-fullwidth is-success" onclick="gmSelect('a');">
-              Select
-            </button>
+            <div class="columns is-centered is-vcentered">
+              <div class ="column is-11">
+                <button id="a.btn.gen" class="button mt-1 is-fullwidth is-success" onclick="gmGenerate('a');">
+                  Generate
+                </button>
+                <button id="a.btn.sel" class="button mt-1 is-fullwidth is-success" onclick="gmSelect('a');">
+                  Select
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <a class="link" href="help.html">
-          Help
-        </a>
       </div>
     </div>
     <script>
