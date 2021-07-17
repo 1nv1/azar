@@ -36,7 +36,7 @@
     </div>
     <script>
      // Starting point
-     var board = { idx: 0, qty: 5, count: 0};
+     var board = { idx: 0, qty: 10, count: 0};
      var gamers = {
        a: { gen: -1, list: [], sel: false, count: 0 },
        b: { gen: -1, list: [], sel: false, count: 0 }
@@ -151,6 +151,21 @@
        btn.innerHTML = gamers[shift(gamer)].gen;
        btn.disabled = true;
        gamers[gamer].sel = gamers[shift(gamer)].gen;
+       // Automatic calculation
+       if ((gamers.a.sel != false) && (gamers.b.sel != false)) {
+         var j;
+         for (; board.idx < board.qty; board.idx++) {
+           gamer = shift(gamer);
+           num = Math.random() * 10;
+           gen = round(num);
+           gamers[gamer].gen = gen;
+           gamers[shift(gamer)].list.push(gen);
+         }
+         whoIsWinner();
+         console.log('A: ' + gamers.a.list + ' <- ' + gamers.a.sel);
+         console.log('B: ' + gamers.b.list + ' <- ' + gamers.b.sel);
+         reset();
+       }
      }
     </script>
   </body>
