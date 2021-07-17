@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+    <link rel="stylesheet" href="./css/bulma.min.css" type="text/css" />
+    <title>AZAR</title>
+  </head>
+  <body>
+    <div class="container is-widescreen">
+      <div class="content">
+        <div class="columns is-centered is-fullwidth">
+          <div class="column is-4 m-4 has-text-centered">
+            <button id="b.btn.sel" class="button is-large mb-4 is-fullwidth is-success" onclick="gmSelect('b');" style="transform: rotate(180deg);">
+              Select
+            </button>
+            <button id="b.btn.gen" class="button is-large mb-4 is-fullwidth is-success" onclick="gmGenerate('b');" style="transform: rotate(180deg);">
+              Generate
+            </button>
+                <h1 id="b.title" style="transform: rotate(180deg);">-.-</h1>
+            <h1 style="transform: rotate(180deg);">Gamer B:</h1>
+            <h3 id="b.stats" style="transform: rotate(180deg);">---</h3>
+            <progress id="game.pb" class="progress" value="0" max="100"></progress>
+            <h3 id="a.stats">---</h3>
+            <h1>Gamer A:</h1>
+            <h1 id="a.title">-.-</h1>
+            <button id="a.btn.gen" class="button is-large mt-4 is-fullwidth is-success" onclick="gmGenerate('a');">
+              Generate
+            </button>
+            <button id="a.btn.sel" class="button is-large mt-4 is-fullwidth is-success" onclick="gmSelect('a');">
+              Select
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+     // Starting point
+     var board = { idx: 0, qty: 5, count: 0};
+     var gamers = {
+       a: { gen: -1, list: [], sel: false, count: 0 },
+       b: { gen: -1, list: [], sel: false, count: 0 }
+     };
+     function round(num) {
+       var rounded = Math.round((num + Number.EPSILON) * 10) / 10;
+       return rounded;
+     }
+     function biggest(gamer) {
+       var j;
+       var m = -1;
+       for (j = 0; j < board.qty; j++) {
+         if (gamers[gamer].list[j] >= m) {
+           m = gamers[gamer].list[j];
+         }
+       }
+     }
+     function shift(gamer) {
+       return(gamer == 'a' ? 'b' : 'a');
+     }
+     function turn(gamer) {
+       var btn = document.getElementById(gamer + '.btn.gen');
+       btn.disabled = true;
+       btn = document.getElementById(shift(gamer) + '.btn.gen');
+       btn.disabled = false;
+       btn = document.getElementById(gamer + '.btn.sel');
+       btn.disabled = true;
+       if (gamers[shift(gamer)].sel == false) {
+         btn = document.getElementById(shift(gamer) + '.btn.sel');
+         btn.disabled = false;
+       }
+     }
+     function reset() {
+       var btn;
+       document.getElementById('game.pb').value = 0;
+       btn = document.getElementById('a.btn.gen');
+       btn.disabled = false;
+       btn = document.getElementById('b.btn.gen');
+       btn.disabled = false;
+       btn = document.getElementById('a.btn.sel');
+       btn.disabled = false;
+       btn.innerHTML = 'Select';
+       btn = document.getElementById('b.btn.sel');
+       btn.disabled = false;
+       btn.innerHTML = 'Select';
+       document.getElementById('a.title').innerHTML = '-.-';
+       document.getElementById('b.title').innerHTML = '-.-';
+       gamers.a.list = [];
+       gamers.b.list = [];
+       gamers.a.sel = false;
+       gamers.a.sel = false;
+     }
+     function whoIsWinner() {
+       var j, sel;
+       var ga = true;
+       var gb = true;
+       var gamer = 'a';
+       sel = gamers[gamer].sel;
+       for (j = 0; j < board.qty; j++) {
+         if (gamers[gamer].list[j] > sel) {
+           ga = false;
+           break;
+         }
+       }
+       var gamer = 'b';
+       sel = gamers[gamer].sel;
+       for (j = 0; j < board.qty; j++) {
+         if (gamers[gamer].list[j] > sel) {
+           gb = false;
+           break;
+         }
+       }
+       board.idx = 0;
+       board.count++;
+       if ((ga != false) && (gb == false)) {
+         document.title = "Winner is A";
+         gamers.a.count++;
+       }
+       else if ((ga == false) && (gb != false)) {
+         document.title = "Winner is B";
+         gamers.b.count++;
+
+       } else {
+         document.title = "Draw!";
+       }
+       document.getElementById('a.stats').innerHTML= 'You win ' + parseInt(gamers.a.count / board.count * 100) + '%';
+       document.getElementById('b.stats').innerHTML= 'You win ' + parseInt(gamers.b.count / board.count * 100) + '%';
+     }
+
+     function gmGenerate(gamer) {
+       turn(gamer);
+       var title = document.getElementById(shift(gamer) + '.title');
+       var num = Math.random() * 10;
+       var gen = round(num);
+       gamers[gamer].gen = gen;
+       gamers[shift(gamer)].list.push(gen);
+       title.innerHTML = gen;
+       //console.log(gamers);
+       var perc = parseInt(board.idx / (board.qty * 2) * 100);
+       document.getElementById('game.pb').value = perc;
+       board.idx++
+       document.title = 'Turn: ' + board.idx + ' of ' + board.qty * 2;
+       if (board.idx >= board.qty * 2) {
+         whoIsWinner();
+         console.log('A: ' + gamers.a.list + ' <- ' + gamers.a.sel);
+         console.log('B: ' + gamers.b.list + ' <- ' + gamers.b.sel);
+         reset();
+       }
+     }
+     function gmSelect(gamer) {
+       var btn = document.getElementById(gamer + '.btn.sel');
+       btn.innerHTML = gamers[shift(gamer)].gen;
+       btn.disabled = true;
+       gamers[gamer].sel = gamers[shift(gamer)].gen;
+     }
+    </script>
+  </body>
+</html>
