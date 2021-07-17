@@ -1,0 +1,2 @@
+# azar
+Simple game
