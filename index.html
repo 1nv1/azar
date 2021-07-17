@@ -41,6 +41,8 @@
        a: { gen: -1, list: [], sel: false, count: 0 },
        b: { gen: -1, list: [], sel: false, count: 0 }
      };
+     document.getElementById('a.btn.sel').disabled = true;
+     document.getElementById('b.btn.sel').disabled = true;
      function round(num) {
        var rounded = Math.round((num + Number.EPSILON) * 10) / 10;
        return rounded;
@@ -77,10 +79,10 @@
        btn = document.getElementById('b.btn.gen');
        btn.disabled = false;
        btn = document.getElementById('a.btn.sel');
-       btn.disabled = false;
+       btn.disabled = true;
        btn.innerHTML = 'Select';
        btn = document.getElementById('b.btn.sel');
-       btn.disabled = false;
+       btn.disabled = true;
        btn.innerHTML = 'Select';
        document.getElementById('a.title').innerHTML = '-.-';
        document.getElementById('b.title').innerHTML = '-.-';
