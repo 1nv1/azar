@@ -127,20 +127,31 @@
        document.getElementById('a.stats').innerHTML= 'You win ' + parseInt(gamers.a.count / board.count * 100) + '%';
        document.getElementById('b.stats').innerHTML= 'You win ' + parseInt(gamers.b.count / board.count * 100) + '%';
      }
-
-     function gmGenerate(gamer) {
-       turn(gamer);
+     function next(gamer, gen) {
        var title = document.getElementById(shift(gamer) + '.title');
-       var num = Math.random() * 10;
-       var gen = round(num);
-       gamers[gamer].gen = gen;
-       gamers[shift(gamer)].list.push(gen);
        title.innerHTML = gen;
        //console.log(gamers);
        var perc = parseInt(board.idx / (board.qty * 2) * 100);
        document.getElementById('game.pb').value = perc;
        board.idx++
        document.title = 'Turn: ' + board.idx + ' of ' + board.qty * 2;
+     }
+     function gmGenerate(gamer) {
+       var num = Math.random() * 10;
+       var gen = round(num);
+       gamers[gamer].gen = gen;
+       gamers[shift(gamer)].list.push(gen);
+       next(gamer, gen);
+       if(gamers[shift(gamer)].sel != false) {
+         gamer = shift(gamer);
+         num = Math.random() * 10;
+         gen = round(num);
+         gamers[gamer].gen = gen;
+         gamers[shift(gamer)].list.push(gen);
+         next(gamer, gen);
+       } else {
+         turn(gamer);
+       }
        if (board.idx >= board.qty * 2) {
          whoIsWinner();
          console.log('A: ' + gamers.a.list + ' <- ' + gamers.a.sel);
