@@ -64,7 +64,7 @@
        btn.disabled = false;
        btn = document.getElementById(gamer + '.btn.sel');
        btn.disabled = true;
-       if (gamers[shift(gamer)].sel == false) {
+       if (gamers[shift(gamer)].sel === false) {
          btn = document.getElementById(shift(gamer) + '.btn.sel');
          btn.disabled = false;
        }
